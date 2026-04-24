@@ -14,10 +14,10 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import Sidebar from '@/src/components/common/Sidebar';
 import Header from '@/src/components/common/Header';
-import Dashboard from '@/src/pages/Dashboard';
-import Sessions from '@/src/pages/Sessions';
-import Marketplace from '@/src/pages/Marketplace';
-import Settings from '@/src/pages/Settings';
+import Dashboard from '@/src/views/Dashboard';
+import Sessions from '@/src/views/Sessions';
+import Marketplace from '@/src/views/Marketplace';
+import Settings from '@/src/views/Settings';
 import '@/src/styles/global.css';
 
 export default function App() {
