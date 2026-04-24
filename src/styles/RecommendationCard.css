@@ -1,0 +1,90 @@
+.recommendation-card {
+  padding: 24px;
+  background: white;
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  text-align: center;
+  margin-top: 24px;
+}
+
+.recommendation-card .badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background-color: var(--pastel-pink);
+  color: var(--accent-pink);
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.rec-title {
+  font-size: 1.1rem;
+  margin-bottom: 24px;
+  color: var(--accent-pink);
+}
+
+.mentor-box {
+  margin-bottom: 24px;
+}
+
+.mentor-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 12px;
+  object-fit: cover;
+  border: 4px solid #f8fafc;
+}
+
+.mentor-box h4 {
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.mentor-box p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.rating {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.book-btn {
+  width: 100%;
+  padding: 14px;
+  color: white;
+  border-radius: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: opacity 0.2s ease;
+}
+
+.book-btn.pink {
+  background: linear-gradient(90deg, var(--accent-pink), #f472b6);
+}
+
+.book-btn.green {
+  background: linear-gradient(90deg, #10b981, #34d399);
+}
+
+.book-btn:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .recommendation-card {
+    padding: 16px;
+  }
+  
+  .mentor-avatar {
+    width: 64px;
+    height: 64px;
+  }
+}

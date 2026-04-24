@@ -1,0 +1,73 @@
+.mind-gym-card {
+  padding: 16px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease;
+}
+
+.mind-gym-card:hover {
+  transform: translateY(-4px);
+}
+
+.mind-gym-header {
+  display: flex;
+  gap: 12px;
+}
+
+.mind-gym-icon-box {
+  background-color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mind-gym-info h3 {
+  font-size: 0.95rem;
+  margin-bottom: 2px;
+}
+
+.mind-gym-info p {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.mind-gym-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.duration {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.start-btn {
+  background-color: white;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+@media (max-width: 480px) {
+  .mind-gym-card:hover {
+    transform: none;
+  }
+}

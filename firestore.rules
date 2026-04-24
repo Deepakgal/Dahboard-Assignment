@@ -1,0 +1,86 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Validation Helpers
+    function isValidUserProfile(data) {
+      return data.keys().hasAll(['displayName', 'email', 'careerProgress']) &&
+             data.displayName is string && data.displayName.size() <= 100 &&
+             data.email is string && data.email.size() <= 100 &&
+             data.careerProgress is number && data.careerProgress >= 0 && data.careerProgress <= 100;
+    }
+
+    function isValidTask(data) {
+      return data.keys().hasAll(['title', 'status', 'section']) &&
+             data.title is string && data.title.size() <= 200 &&
+             data.status in ['locked', 'continue', 'completed'] &&
+             data.section is string && data.section.size() <= 100;
+    }
+
+    function isValidMoodEntry(data) {
+      return data.keys().hasAll(['score', 'createdAt']) &&
+             data.score is number && data.score >= 0 && data.score <= 100 &&
+             data.createdAt == request.time;
+    }
+
+    function isValidAIQuery(data) {
+      return data.keys().hasAll(['question', 'answer', 'createdAt']) &&
+             data.question is string && data.question.size() <= 1000 &&
+             data.answer is string && data.answer.size() <= 5000 &&
+             data.createdAt == request.time;
+    }
+
+    // Collection Rules
+    match /users/{userId} {
+      allow get: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidUserProfile(incoming());
+      allow update: if isOwner(userId) && isValidUserProfile(incoming()) && (
+        incoming().diff(existing()).affectedKeys().hasOnly(['displayName', 'careerProgress', 'currentMilestone'])
+      );
+
+      match /tasks/{taskId} {
+        allow list, get: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidId(taskId) && isValidTask(incoming());
+        allow update: if isOwner(userId) && isValidTask(incoming()) && (
+          incoming().diff(existing()).affectedKeys().hasOnly(['status', 'updatedAt'])
+        );
+        allow delete: if isOwner(userId);
+      }
+
+      match /mood_logs/{logId} {
+        allow list, get: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidId(logId) && isValidMoodEntry(incoming());
+      }
+
+      match /ai_queries/{queryId} {
+        allow list, get: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidId(queryId) && isValidAIQuery(incoming());
+      }
+    }
+  }
+}
